@@ -1,0 +1,23 @@
+{
+  "name": "arthound-backend",
+  "version": "1.0.0",
+  "description": "backend for arthound",
+  "homepage": "https://github.com/danielmvalentine/arthound-backend#readme",
+  "bugs": {
+    "url": "https://github.com/danielmvalentine/arthound-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielmvalentine/arthound-backend.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
