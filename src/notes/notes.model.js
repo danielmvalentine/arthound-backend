@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const NoteSchema = new mongoose.Schema({
-  author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  authorId: String, 
   text: String,
   targetType: { type: String, enum: ["artwork", "exhibition"] },
   targetId: String,

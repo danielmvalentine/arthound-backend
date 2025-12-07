@@ -1,42 +1,43 @@
 const Note = require("./notes.model");
-const { allowRole } = require("../middleware/roles");
 
 // CREATE NOTE
 exports.create = async (req, res) => {
-  const { text, targetType, targetId } = req.body;
+  const { text, targetType, targetId, userId } = req.body;
 
   const note = await Note.create({
     text,
     targetType,
     targetId,
-    author: req.user.id
+    authorId: userId
   });
 
   res.json(note);
 };
 
-// GET NOTES FOR A SPECIFIC ART ITEM
+// GET NOTES FOR A SPECIFIC ARTWORK/EXHIBITION
 exports.getForTarget = async (req, res) => {
   const { type, id } = req.params;
 
   const notes = await Note.find({
     targetType: type,
     targetId: id
-  }).populate("author", "username avatar");
+  });
 
   res.json(notes);
 };
 
-// DELETE (author or curator)
+// DELETE NOTE
 exports.delete = async (req, res) => {
-  const note = await Note.findById(req.params.id);
+  const { id } = req.params;
+  const { userId } = req.body;
 
-  if (!note) return res.status(404).json({ error: "Note not found" });
+  const note = await Note.findById(id);
+  if (!note) return res.status(404).json({ error: "Not found" });
 
-  if (req.user.id !== note.author.toString() && req.user.role !== "curator") {
+  // Only delete if user is the owner
+  if (note.authorId !== userId)
     return res.status(403).json({ error: "Unauthorized" });
-  }
 
-  await Note.findByIdAndDelete(req.params.id);
+  await Note.deleteOne({ _id: id });
   res.json({ success: true });
 };

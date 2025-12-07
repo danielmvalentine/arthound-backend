@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+
 const auth = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -14,4 +15,14 @@ const auth = (req, res, next) => {
   }
 };
 
-module.exports = auth;
+
+const allowRole = (role) => {
+  return (req, res, next) => {
+    if (req.user.role !== role) {
+      return res.status(403).json({ error: "Forbidden: insufficient role." });
+    }
+    next();
+  };
+};
+
+module.exports = { auth, allowRole };

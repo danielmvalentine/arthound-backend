@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Test Route
+// Test route
 app.get("/hello", (req, res) => {
   res.send("Hello from ArtHound backend!");
 });

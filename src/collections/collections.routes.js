@@ -2,15 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const controller = require("./collections.controller");
-const auth = require("../middleware/auth");
 
-// Private collection routes
-router.post("/", auth, controller.create);
-router.get("/mine", auth, controller.getMine);
-router.put("/:id", auth, controller.update);
-router.delete("/:id", auth, controller.delete);
-
-// Public
-router.get("/user/:id", controller.getByUser);
+router.post("/", controller.create);
+router.get("/mine", controller.getMine);
+router.put("/:id", controller.update);
+router.delete("/:id", controller.delete);
 
 module.exports = router;

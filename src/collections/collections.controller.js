@@ -1,38 +1,42 @@
 const Collection = require("./collections.model");
 
+// CREATE
 exports.create = async (req, res) => {
-  const { name, artworks, exhibitions } = req.body;
+  const { name, artworks, exhibitions, userId } = req.body;
 
   const collection = await Collection.create({
     name,
     artworks,
     exhibitions,
-    owner: req.user.id
+    ownerId: userId
   });
 
   res.json(collection);
 };
 
+// GET USER'S COLLECTIONS
 exports.getMine = async (req, res) => {
-  const collections = await Collection.find({ owner: req.user.id });
+  const { userId } = req.query;
+  const collections = await Collection.find({ ownerId: userId });
   res.json(collections);
 };
 
-exports.getByUser = async (req, res) => {
-  const collections = await Collection.find({ owner: req.params.id });
-  res.json(collections);
-};
-
+// UPDATE
 exports.update = async (req, res) => {
-  const collection = await Collection.findOneAndUpdate(
-    { _id: req.params.id, owner: req.user.id },
-    req.body,
+  const { name, artworks, exhibitions } = req.body;
+  const { id } = req.params;
+
+  const updated = await Collection.findByIdAndUpdate(
+    id,
+    { name, artworks, exhibitions },
     { new: true }
   );
-  res.json(collection);
+
+  res.json(updated);
 };
 
+// DELETE
 exports.delete = async (req, res) => {
-  await Collection.deleteOne({ _id: req.params.id, owner: req.user.id });
+  await Collection.findByIdAndDelete(req.params.id);
   res.json({ success: true });
 };
