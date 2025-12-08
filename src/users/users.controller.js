@@ -1,6 +1,7 @@
 const User = require("./users.model");
 const bcrypt = require("bcrypt");
 
+// Register account
 exports.register = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -19,6 +20,7 @@ exports.register = async (req, res) => {
   }
 };
 
+// Login to account
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
