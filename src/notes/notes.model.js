@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
-const NoteSchema = new mongoose.Schema({
-  authorId: String, 
-  text: String,
-  targetType: { type: String, enum: ["artwork", "exhibition"] },
-  targetId: String,
+const noteSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  authorId: { type: String, required: true },
+  targetType: { 
+    type: String, 
+    required: true,
+    enum: ['artwork', 'artworks', 'exhibition', 'exhibitions']
+  },
+  targetId: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model("Note", NoteSchema);
+module.exports = mongoose.model("Note", noteSchema);

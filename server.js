@@ -8,4 +8,5 @@ connectDB();
 
 app.listen(PORT, () => {
   console.log(`ArtHound backend running on port ${PORT}`);
+  console.log(`Test: http://localhost:${PORT}/hello`);
 });
